@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private String tag = MainActivity.class.getSimpleName();
-    private TextView resultView;
+    public TextView resultView;
+    private MyReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +28,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        myReceiver = new MyReceiver(MainActivity.this);
+        registerReceiver(myReceiver, new IntentFilter("runThread"));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        unregisterReceiver(myReceiver);
     }
 
     public void createFun(View view){
         Log.d(tag, "+++++MaiActivity run createFun+++++");
-
+        Intent intent = new Intent("runThread");
+        intent.putExtra("result", "result");
+        sendBroadcast(intent);
     }
 }
