@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void createFun(View view){
         Log.d(tag, "+++++MaiActivity run createFun+++++");
-        Intent intent = new Intent("runThread");
-        intent.putExtra("result", "result");
-        sendBroadcast(intent);
+        MyThread myThread = new MyThread(MainActivity.this, "method1", "happy");
+//        MyThread myThread = new MyThread(MainActivity.this, "method2", "happy");
+        myThread.start();
     }
 }

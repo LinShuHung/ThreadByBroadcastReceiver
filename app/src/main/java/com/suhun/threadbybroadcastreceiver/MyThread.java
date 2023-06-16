@@ -9,7 +9,7 @@ public class MyThread extends Thread{
     private MainActivity activity;
     private String op="";
     private String name;
-    public MyThread(Context activity, String name){
+    public MyThread(Context activity, String op){
         this.activity = (MainActivity)activity;
         this.name = name;
     }
@@ -35,6 +35,10 @@ public class MyThread extends Thread{
     private void runMethod1(){
         for(int i=1;i<=20;i++){
             Log.d(tag, "+++++MyThread run method1 +++++"+this.name+":"+i);
+            String counterResult = this.name+":"+i;
+            Intent intent = new Intent("runThread");
+            intent.putExtra("result", counterResult);
+            activity.sendBroadcast(intent);
             try{
                 Thread.sleep(500);
             }catch (Exception e){
@@ -45,7 +49,11 @@ public class MyThread extends Thread{
 
     private void runMethod2(){
         for(int i=1;i<=20;i++){
-            Log.d(tag, "+++++MyThread run method2 +++++"+":"+i);
+            Log.d(tag, "+++++MyThread run method2 +++++"+i);
+            String counterResult = ""+i;
+            Intent intent = new Intent("runThread");
+            intent.putExtra("result", counterResult);
+            activity.sendBroadcast(intent);
             try{
                 Thread.sleep(500);
             }catch (Exception e){
